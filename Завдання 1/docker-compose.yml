@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Сервіс Node.js (Express) застосунку
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgres://node_user:secure_password_2026@db:5432/app_database
+    # Застосунок залежить від успішного проходження Healthcheck базою даних
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+  # Сервіс бази даних PostgreSQL
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=node_user
+      - POSTGRES_PASSWORD=secure_password_2026
+      - POSTGRES_DB=app_database
+    # Використання іменованого Volume для персистентності даних
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    # Обов'язкова перевірка готовності БД приймати з'єднання
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U node_user -d app_database"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+# Визначення іменованих томів
+volumes:
+  pgdata:
+    driver: local

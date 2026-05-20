@@ -1,0 +1,13 @@
+{
+  "name": "jest-discount-testing",
+  "version": "1.0.0",
+  "description": "Task 3: Unit testing with Jest",
+  "main": "discount.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

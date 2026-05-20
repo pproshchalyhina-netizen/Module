@@ -1,0 +1,21 @@
+# Виключення локальних залежностей та логів
+node_modules
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+
+# Виключення інфраструктурних та Git файлів
+.git
+.github
+.gitignore
+Dockerfile
+docker-compose.yml
+.env
+.env.development
+.env.local
+
+# Виключення документації та тестових скриптів
+tests
+coverage
+README.md
+ai-session.md
